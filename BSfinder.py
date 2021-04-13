@@ -1,6 +1,24 @@
 import math
-import time
-import sys
+import argparse
+import numpy as np
+
+
+infile = argparse.ArgumentParser(description='Set input files and destination file')
+infile.add_argument('genome', metavar='genome', help='Set input csv depth file', type=argparse.FileType('r'))
+#set the width of the window
+infile.add_argument('binding_sites', metavar='binding sites', help='Determine the width of the window', type=argparse.FileType('r'))
+#set the output file
+infile.add_argument('dest_file', metavar='output file', help='Set the name of your output file', type=argparse.FileType('w+'))
+args = infile.parse_args()
+Genome = args.genome
+motifs = args.binding_sites.readlines()
+output = args.dest_file
+
+Motifs = []
+
+for line in motifs:
+    Motifs.append(line.strip())
+
 
 def Search(Motifs, Genome):
     genome = Genome.read().replace("\n", "")
@@ -98,11 +116,6 @@ def Count(Motifs):
     return count
 
 
-Motifs = []
-motifs = open("BSubtilis_BS_aligned.txt", "r")
-for line in motifs:
-    Motifs.append(line.strip())
-Genome = open("BSubtilis_genome.txt", "r")
-#sys.stdout = open("results.txt", "w")
-Search(Motifs, Genome)
-#sys.stdout.close()
+
+
+print(Search(Motifs, Genome), file=output)

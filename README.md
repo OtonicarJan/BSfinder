@@ -7,4 +7,4 @@ Output file: file with scores for binding sites. Cutoff is already set to the to
 You must have installed numpy and biopython. 
 To install them: 
 
-```pip3 install numpy biopython````
+```pip3 install numpy biopython```

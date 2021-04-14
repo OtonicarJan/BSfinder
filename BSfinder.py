@@ -1,7 +1,7 @@
 import math
 import argparse
 import numpy as np
-
+from Bio.Seq import Seq
 
 infile = argparse.ArgumentParser(description='Set input files and destination file')
 infile.add_argument('genome', metavar='genome', help='Set input csv depth file', type=argparse.FileType('r'))
@@ -27,10 +27,14 @@ def Search(Motifs, Genome):
     lenght = len(genome)
     k = len(Motifs[0])
     for i in range(lenght - k + 1):
-        pattern = genome[i:i+k]
-        score = BvH(pattern, Motifs)
+        pattern = genome[i:i+k] 
+        reverse = Seq(pattern).reverse_complement()
+        score = BvH(pattern, Motifs) 
+        scoreReverse = BvH(reverse, Motifs)
         if score < percentile(Motifs, Genome):
-            bindingsites[i+1, i+k+1] = score
+            bindingsites[i+1, i+k+1] = score 
+        elif scoreReverse < percentile(Motifs, Genome): 
+            bindingsites[i+1, i+k+1] = scoreReverse
     return bindingsites
 
 def percentile(Motifs, Genome):

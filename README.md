@@ -8,3 +8,7 @@ You must have installed numpy and biopython.
 To install them: 
 
 ```pip3 install numpy biopython```
+
+To run BSfinder: 
+
+```python3 BSfinder.py genome.fasta list_of_binding_sites.txt outfile.txt```

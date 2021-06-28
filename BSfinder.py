@@ -6,9 +6,9 @@ from Bio.Seq import Seq
 infile = argparse.ArgumentParser(description='Set input files and destination file')
 infile.add_argument('genome', metavar='genome', help='Set input csv depth file', type=argparse.FileType('r'))
 #set the width of the window
-infile.add_argument('binding_sites', metavar='binding sites', help='Determine the width of the window', type=argparse.FileType('r'))
+infile.add_argument('binding_sites', metavar='list_of_binding_sites', help='file with aligned confirmed binding sites', type=argparse.FileType('r'))
 #set the output file
-infile.add_argument('dest_file', metavar='output file', help='Set the name of your output file', type=argparse.FileType('w+'))
+infile.add_argument('dest_file', metavar='output_file', help='Set the name of your output file', type=argparse.FileType('w+'))
 args = infile.parse_args()
 Genome = args.genome
 motifs = args.binding_sites.readlines()
@@ -21,7 +21,11 @@ for line in motifs:
 
 
 def Search(Motifs, Genome):
-    genome = Genome.read().replace("\n", "")
+    tem = Genome.readlines()[1:]  
+    genome = ""
+    for line in tem: 
+        genome = genome + line.strip()
+    #genome = genome.replace("\n", "")
     #cutoff = percentile(Motifs, Genome)
     bindingsites = {}
     lenght = len(genome)
